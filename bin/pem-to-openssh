@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage() {
+  {
+    echo "usage: $0 <source> <target> [<passphrase>]"
+    echo ""
+    echo "      source: private key in PEM format (used in HTTPS certificates)"
+    echo "      target: where to save your new OpenSSH signing key"
+    echo "  passphrase: encrypt the output key using a passphrase"
+    echo "              use an empty string or '-' to be asked interactively"
+    echo "              omit this argument to skip encryption"
+  } >&2
+  return 1
+}
+
+main() {
+  declare source="${1:-}" target="${2:-}" passphrase="${3:-}"
+
+  if [[ -z "$source" ]] || [[ -z "$target" ]] || [[ $# -gt 3 ]]; then
+    usage
+  fi
+
+  if [[ ! -r "$source" ]]; then
+    echo "Error: source file $source is not readable" >&2
+    return 2
+  fi
+
+  if [[ -f "$target" ]]; then
+    read -rp "Target file $target exists. Overwrite? Press Ctrl+C to cancel, Enter to continue: " >&2
+  fi
+
+  cp "$source" "$target"
+  chmod 0600 "$target"
+
+  if [[ $# -eq 3 ]] && [[ "-" == "$passphrase" || "" == "$passphrase" ]]; then
+    ssh-keygen -p -f "$target"
+  else
+    ssh-keygen -p -N "$passphrase" -f "$target"
+  fi
+}
+
+main "$@"

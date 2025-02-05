@@ -1,0 +1,38 @@
+name: Create release
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+permissions:
+  contents: write
+  packages: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-tags: 'true'
+          fetch-depth: '0'
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.0
+
+      - name: Build phar
+        run:
+          make -C cli
+          mv cli/ssh-verify.phar bin/ssh-verify
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            bin/ssh-verify
+            bin/ssh-sign
+            bin/pem-to-openssh

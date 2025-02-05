@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage() {
+  {
+    echo "usage: $0 <namespace> <ssh-key> [<message-file>...]"
+    echo ""
+    echo "     namespace: is an arbitrary string you need to agree on with the recipient"
+    echo "       ssh-key: will be used to sign the payload."
+    echo "  message-file: one or more files to sign. /dev/stdin is used by default"
+    echo "                signature will be saved with a file suffixed .sig"
+    echo "                if a process substitution or stdin will be provided"
+    echo "                then the signature will be written to stdout"
+  } >&2
+  return 1
+}
+
+main() {
+  declare namespace="${1:-}" ssh_key="${2:-}"
+  shift 2 || :
+
+  if [[ -z "$namespace" ]]; then
+    echo "Error: namespace argument is required" >&2
+    usage
+  fi
+
+  if [[ -z "$ssh_key" ]]; then
+    echo "Error: ssh-key argument is required" >&2
+    usage
+  fi
+
+  if [[ ! -r "$ssh_key" ]]; then
+    echo "Key $ssh_key does not exist or is not readable" >&2
+    return 1
+  fi
+
+  if [[ -z "$*" ]]; then
+    ssh-keygen -Y sign -n "$namespace" -f "$ssh_key"
+  fi
+
+  for file in "$@"; do
+    if [[ -f "$file" ]]; then
+      ssh-keygen -Y sign -n "$namespace" -f "$ssh_key" "$file"
+    else
+      ssh-keygen -Y sign -n "$namespace" -f "$ssh_key" < "$file"
+    fi
+  done
+}
+
+main "$@"

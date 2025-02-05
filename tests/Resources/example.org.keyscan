@@ -1,0 +1,8 @@
+# example.org:22 SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.11
+# example.org:22 SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.11
+example.org ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDBWaW0ram/m0MnBTKWM6l0aJMPwZs7l8wXXkWRaCoFu03T9omEJpGf/ViVnvQ4mgwFnjcNKyh7ISB7nYq04RvbWOd7m8h4AmrAEjkjTvJ9qp+laEYt0sONUGJCzLinEKPE5Gh4+dMXIlsrq77opqVHoiW+B4oqHXJdP2d9TModFNtgzAlEr8FnLeNz8lTx54r5xnuXMmsewRyuh6y0CvunDAwadztHmZpxurd/WDoABCwaUUyH9qqTOt7S25lVlJn+B0gwSFfyq8DG1fOv0/rz1/nvKcMbl60xPFcKCSu8hudxr/okoPzMg388E08Zx1r9q7wPC+dTHbapT7MTFyx+C1WPveIAE6cBIb+zk/4zzwRkqa5O9UNwzn0hGxfwuJIvuWDICeelJTofTKryndecg3VvEujrS+vxTnSSM5UB0ou2CyYfacUFXpGOjouKEefYCDP8EuNrESFsBz5IFpbWerzEVdhgkC4Cytw8sn2FVBzx5vm7AMYLACqnQ1pq3VE=
+# example.org:22 SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.11
+example.org ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAHGOuQ3Pvona5A4oW0ehDGmPNEkIplg4bqc+QrZDVplZ0v/Ke1onTiS6rRiBo1AGxYG6QEqjci0tovBO7soXJk=
+# example.org:22 SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.11
+example.org ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEcyMS/W7k2+eU5TaNLyNXmtkUnKI3G8yIlmhYJVbKaz
+# example.org:22 SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.11

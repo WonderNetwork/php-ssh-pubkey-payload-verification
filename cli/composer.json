@@ -1,0 +1,22 @@
+{
+    "name": "wondernetwork/ssh-verify",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "wondernetwork/ssh-pubkey-payload-verification": "*@dev",
+        "symfony/console": "^6",
+        "symfony/cache": "^6",
+        "symfony/http-client": "^6",
+        "nyholm/psr7": "^1.8"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": false
+        }
+    }
+}

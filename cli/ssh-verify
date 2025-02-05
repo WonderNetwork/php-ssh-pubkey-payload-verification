@@ -1,0 +1,82 @@
+#!/usr/bin/env php
+<?php
+declare(strict_types=1);
+
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use WonderNetwork\SshPubkeyPayloadVerification\ValidatorBuilder;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$app = new Application(name: 'SSH Verify @git-version@');
+$app->add(new class extends Command {
+    protected function configure(): void {
+        $this->setName(name: 'verify');
+        $this->addOption('is-file',
+            null,
+            InputOption::VALUE_NONE,
+            description: 'Treat message as a filename',
+        );
+        $this->addOption('ensure-newline',
+            null,
+            InputOption::VALUE_NONE,
+            description: 'For non-file messages, ensure they end in a newline',
+        );
+        $this->addArgument('sender', InputArgument::REQUIRED);
+        $this->addArgument('namespace', InputArgument::REQUIRED);
+        $this->addArgument('message', InputArgument::REQUIRED);
+        $this->addArgument(
+            'signature',
+            InputArgument::OPTIONAL,
+            default: '',
+        );
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output): int {
+        /** @var bool $isFile */
+        $isFile = $input->getOption('is-file');
+        /** @var bool $ensureNewline */
+        $ensureNewline = $input->getOption('ensure-newline');
+        /** @var string $sender */
+        $sender = $input->getArgument('sender');
+        /** @var string $namespace */
+        $namespace = $input->getArgument('namespace');
+        /** @var string $message */
+        $message = $input->getArgument('message');
+        /** @var string $signature */
+        $signature = $input->getArgument('signature');
+
+        if ($isFile) {
+            if ("" === $signature) {
+                $signature = $message.'.sig';
+            } elseif ("-" === $signature) {
+                $signature = '/dev/stdin';
+            }
+
+            $message = (string) \file_get_contents($message);
+            if (file_exists($signature)) {
+                $signature = \file_get_contents($signature)
+                    ?: throw new RuntimeException("Failed to read signature from file $signature");
+            }
+        } elseif ($ensureNewline && false === str_ends_with($message, "\n")) {
+            $message .= "\n";
+        }
+
+        $validator = ValidatorBuilder::start()->build();
+
+        $validator->validate(
+            sender: $sender,
+            namespace: $namespace,
+            message: $message,
+            signature: $signature,
+        );
+
+        return 0;
+    }
+});
+$app->setDefaultCommand('verify', true);
+$app->run();
