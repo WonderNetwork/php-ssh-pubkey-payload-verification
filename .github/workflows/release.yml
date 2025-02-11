@@ -25,9 +25,7 @@ jobs:
           php-version: 8.0
 
       - name: Build phar
-        run:
-          make -C cli
-          mv cli/ssh-verify.phar bin/ssh-verify
+        run: make -C cli
 
       - name: Release
         uses: softprops/action-gh-release@v2
