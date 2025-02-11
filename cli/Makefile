@@ -4,9 +4,9 @@
 BUILD_PATH := $(shell mktemp -d)
 
 ../bin/ssh-verify: tools/box ${BUILD_PATH}/vendor
-	@echo "${BUILD_PATH}"
 	@tools/box/vendor/bin/box compile -d "${BUILD_PATH}"
 	@mv "${BUILD_PATH}/index.phar" ../bin/ssh-verify
+	@rm -fr "${BUILD_PATH}"
 
 ${BUILD_PATH}/vendor:
 	@cp composer.json composer.lock "${BUILD_PATH}"

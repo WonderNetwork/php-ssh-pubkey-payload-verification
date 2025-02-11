@@ -75,17 +75,21 @@ final class ValidatorBuilder {
     }
 
     public function build(): Validator {
+        return new Validator(
+            publicKeyRepository: $this->keyRepository ?? $this->standardKeyRepository(),
+        );
+    }
+
+    public function standardKeyRepository(): StandardKeyRepository {
         $keyscan = $this->keyscan;
         if ($this->cache !== null) {
             $keyscan = new CachedKeyscan($keyscan, $this->cache);
         }
 
-        return new Validator(
-            publicKeyRepository: $this->keyRepository ?? new StandardKeyRepository(
-                github: new GithubKeyRepository($this->httpClient, $this->requestFactory),
-                ssl: new HttpsCertificateRepository(),
-                hostKeyscan: $keyscan,
-            ),
+        return new StandardKeyRepository(
+            github: new GithubKeyRepository($this->httpClient, $this->requestFactory),
+            ssl: new HttpsCertificateRepository(),
+            hostKeyscan: $keyscan,
         );
     }
 }

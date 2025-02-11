@@ -44,7 +44,7 @@ Then the receiver confirms that the signature used one of the public
 keys available for a given sender, and that the signature matches
 the message payload. No passwords.
 
-See also [example][demo] for a simple proof of concept.
+See also [example/web-demo][web-demo] for a simple proof of concept.
 
 ## Installation
 
@@ -166,8 +166,16 @@ ssh-keygen -p -N "" -f ssh-signkey.rsa
 jq -Mcn .valid=true | ssh-keygen -Y sign -n example -f ssh-signkey.rsa
 ```
 
+### Extending key sources
+
+Basically, you need to implement `KeyRepository` to return your own `KeyCollection`
+based on the `string $sender`. You can decorate the existing `StandardKeyRepository`
+to keep the built-in features and only add yours on top. An example how this could
+be done using DNS TXT entries is in [examples/dns-txt][dns-demo]
+
 [ssh-sign]: bin/ssh-sign
-[demo]: ./example/
+[web-demo]: ./examples/web-demo
+[dns-demo]: ./examples/dns-txt-demo
 [http-client]: https://packagist.org/providers/psr/http-client-implementation
 [simple-cache]: https://packagist.org/providers/psr/simple-cache-implementation
 [http-factory]: https://packagist.org/providers/psr/http-factory-implementation

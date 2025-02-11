@@ -4,7 +4,7 @@
 use WonderNetwork\SshPubkeyPayloadVerification\ValidatorBuilder;
 use WonderNetwork\SshPubkeyPayloadVerification\ValidatorException;
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
 $sender = sprintf("ssh://%s", $_SERVER['REMOTE_ADDR']);
 $namespace = $_POST['namespace'];
