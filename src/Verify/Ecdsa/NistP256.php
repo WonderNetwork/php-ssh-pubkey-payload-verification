@@ -6,7 +6,7 @@ namespace WonderNetwork\SshPubkeyPayloadVerification\Verify\Ecdsa;
 /**
  * @link https://neuromancer.sk/std/nist/P-256
  */
-final class NistP256 implements Curve {
+final readonly class NistP256 implements Curve {
     public function prime(): string {
         return \implode([
             "\xFF\xFF\xFF\xFF\x00\x00\x00\x01",

@@ -11,11 +11,11 @@ use Psr\Http\Message\ResponseInterface;
 final class HttpClientSpy implements ClientInterface {
     public array $calls = [];
 
-    public static function ofPsr18Discovery(Psr18Client $factory): self {
-        return new self($factory);
+    public static function some(): self {
+        return new self(client: new Psr18Client());
     }
 
-    public function __construct(private Psr18Client $client) {
+    private function __construct(private readonly Psr18Client $client) {
     }
 
     public function sendRequest(RequestInterface $request): ResponseInterface {

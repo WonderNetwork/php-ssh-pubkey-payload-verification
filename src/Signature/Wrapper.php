@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace WonderNetwork\SshPubkeyPayloadVerification\Signature;
 
-final class Wrapper {
-    private const HEADER = "-----BEGIN SSH SIGNATURE-----";
-    private const FOOTER = "-----END SSH SIGNATURE-----";
+final readonly class Wrapper {
+    private const string HEADER = "-----BEGIN SSH SIGNATURE-----";
+    private const string FOOTER = "-----END SSH SIGNATURE-----";
 
     /**
      * @throws NotProperlyWrappedException

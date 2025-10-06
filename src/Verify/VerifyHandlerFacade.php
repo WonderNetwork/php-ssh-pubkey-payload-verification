@@ -6,7 +6,7 @@ namespace WonderNetwork\SshPubkeyPayloadVerification\Verify;
 use WonderNetwork\SshPubkeyPayloadVerification\Key\Key;
 use WonderNetwork\SshPubkeyPayloadVerification\Signature\Signature;
 
-final class VerifyHandlerFacade {
+final readonly class VerifyHandlerFacade {
     public function __construct(private VerifyHandler $verifyHandler, private Key $key) {
     }
 

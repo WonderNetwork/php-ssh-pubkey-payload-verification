@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace WonderNetwork\SshPubkeyPayloadVerification\Signature;
 
-final class Base64Decoder {
+final readonly class Base64Decoder {
     /**
      * @throws Base64DecodingException
      */

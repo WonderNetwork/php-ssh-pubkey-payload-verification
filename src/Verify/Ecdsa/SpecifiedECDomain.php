@@ -13,7 +13,7 @@ use WonderNetwork\SshPubkeyPayloadVerification\Verify\Der\Sequence;
  * Syntax for Elliptic Curve Domain Parameters
  * @link https://secg.org/sec1-v2.pdf#subsection.C.2
  */
-final class SpecifiedECDomain {
+final readonly class SpecifiedECDomain {
     public static function of(Curve $curve): Sequence {
         return Sequence::of(
             version: Integer::of(Curve::ECDP_VER_1),

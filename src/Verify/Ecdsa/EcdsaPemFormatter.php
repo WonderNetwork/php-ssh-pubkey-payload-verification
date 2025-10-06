@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace WonderNetwork\SshPubkeyPayloadVerification\Verify\Ecdsa;
 
 use WonderNetwork\SshPubkeyPayloadVerification\Key\Key;
+use WonderNetwork\SshPubkeyPayloadVerification\Key\KeyType;
 use WonderNetwork\SshPubkeyPayloadVerification\Signature\BinaryBuffer;
 use WonderNetwork\SshPubkeyPayloadVerification\Verify\KeyTypeNotAllowedException;
 
@@ -20,13 +21,13 @@ final class EcdsaPemFormatter {
      * @throws KeyTypeNotAllowedException
      */
     public function format(Key $key): string {
-        if ($key->type() !== Key::ECDSA_SHA2_NISTP256) {
-            throw new KeyTypeNotAllowedException($key->type());
+        if ($key->type !== KeyType::ECDSA_SHA2_NISTP256) {
+            throw new KeyTypeNotAllowedException($key->type->value);
         }
 
-        $buffer = BinaryBuffer::ofBase64($key->publicKey());
+        $buffer = BinaryBuffer::ofBase64($key->publicKey);
         $alg = $buffer->readString();
-        if ($alg !== Key::ECDSA_SHA2_NISTP256) {
+        if ($alg !== KeyType::ECDSA_SHA2_NISTP256->value) {
             throw new KeyTypeNotAllowedException($alg);
         }
 

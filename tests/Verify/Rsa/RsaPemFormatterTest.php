@@ -5,12 +5,13 @@ namespace WonderNetwork\SshPubkeyPayloadVerification\Verify\Rsa;
 
 use PHPUnit\Framework\TestCase;
 use WonderNetwork\SshPubkeyPayloadVerification\Key\Key;
+use WonderNetwork\SshPubkeyPayloadVerification\Key\KeyType;
 
 final class RsaPemFormatterTest extends TestCase {
     public function testFormat(): void {
         $sut  = new RsaPemFormatter();
         $key = new Key(
-            type: Key::RSA,
+            type: KeyType::RSA,
             publicKey:
                 <<<EOF
                 AAAAB3NzaC1yc2EAAAADAQABAAABgQDCbq6VNbCUXTpdBpZeTlCZs2Tf

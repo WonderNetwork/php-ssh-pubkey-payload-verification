@@ -9,7 +9,7 @@ use WonderNetwork\SshPubkeyPayloadVerification\Verify\Der\Sequence;
 /**
  * @link https://secg.org/sec1-v2.pdf#subsection.C.3
  */
-final class EcPublicKeyType {
+final readonly class EcPublicKeyType {
     public static function of(Curve $curve): Sequence {
         return Sequence::of(
             id: ObjectIdentifier::ecPublicKey(),

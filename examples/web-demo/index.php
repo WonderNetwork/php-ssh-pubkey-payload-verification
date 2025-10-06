@@ -17,7 +17,8 @@ $validator = ValidatorBuilder::start()
 
 try {
     $validator->validate($sender, $namespace, $message, $signature);
-    printf($message);
+    echo "The following message was verified successfully:\n";
+    echo $message;
 } catch (ValidatorException $exception) {
     header('HTTP/1.0 400 Bad Request');
     printf("Error: %s\n", $exception->getMessage());

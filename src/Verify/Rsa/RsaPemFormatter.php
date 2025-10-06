@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace WonderNetwork\SshPubkeyPayloadVerification\Verify\Rsa;
 
 use WonderNetwork\SshPubkeyPayloadVerification\Key\Key;
+use WonderNetwork\SshPubkeyPayloadVerification\Key\KeyType;
 use WonderNetwork\SshPubkeyPayloadVerification\Signature\BinaryBuffer;
 use WonderNetwork\SshPubkeyPayloadVerification\Verify\Der\BitString;
 use WonderNetwork\SshPubkeyPayloadVerification\Verify\Der\Integer;
@@ -12,18 +13,18 @@ use WonderNetwork\SshPubkeyPayloadVerification\Verify\Der\ObjectIdentifier;
 use WonderNetwork\SshPubkeyPayloadVerification\Verify\Der\Sequence;
 use WonderNetwork\SshPubkeyPayloadVerification\Verify\KeyTypeNotAllowedException;
 
-final class RsaPemFormatter {
+final readonly class RsaPemFormatter {
     /**
      * @throws KeyTypeNotAllowedException
      */
     public function format(Key $key): string {
-        if ($key->type() !== Key::RSA) {
-            throw new KeyTypeNotAllowedException($key->type());
+        if ($key->type !== KeyType::RSA) {
+            throw new KeyTypeNotAllowedException($key->type->value);
         }
 
-        $buffer = BinaryBuffer::ofBase64($key->publicKey());
+        $buffer = BinaryBuffer::ofBase64($key->publicKey);
         $alg = $buffer->readString();
-        if ($alg !== Key::RSA) {
+        if ($alg !== KeyType::RSA->value) {
             throw new KeyTypeNotAllowedException($alg);
         }
 

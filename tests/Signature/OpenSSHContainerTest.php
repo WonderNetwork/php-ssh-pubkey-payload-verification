@@ -12,7 +12,7 @@ class OpenSSHContainerTest extends TestCase {
             publicKey: KeyMother::some(),
             namespace: "",
             reserved: "",
-            hashAlgorithm: new HashAlgorithm('sha256'),
+            hashAlgorithm: HashAlgorithm::SHA256,
             signature: SignatureMother::some(),
         );
         // snapshot test

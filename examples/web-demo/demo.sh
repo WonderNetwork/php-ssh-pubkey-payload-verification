@@ -17,7 +17,7 @@ trap 'cleanup $pid' EXIT
 ssh-keygen -q -t ecdsa -f ./id_ecdsa -N ""
 cut -f 1-2 -d" " <id_ecdsa.pub | sed 's/^/127.0.0.1 /' > known_hosts
 
-../bin/ssh-sign "demo" id_ecdsa.pub message.txt
+../../bin/ssh-sign "demo" id_ecdsa.pub message.txt
 
 echo "Sending"
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace WonderNetwork\SshPubkeyPayloadVerification\Verify\Ecdsa;
 
 interface Curve {
-    public const ECDP_VER_1 = "\x01";
+    public const string ECDP_VER_1 = "\x01";
 
     public function prime(): string;
     public function a(): string;

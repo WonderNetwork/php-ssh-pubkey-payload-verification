@@ -6,7 +6,7 @@ namespace WonderNetwork\SshPubkeyPayloadVerification\Keyscan;
 use WonderNetwork\SshPubkeyPayloadVerification\Key\Key;
 use WonderNetwork\SshPubkeyPayloadVerification\Utilities\Pipeline;
 
-final class FileKeyscan implements Keyscan {
+final readonly class FileKeyscan implements Keyscan {
     public function __construct(private string $knownHosts, private bool $strict = true) {
     }
 
@@ -36,7 +36,7 @@ final class FileKeyscan implements Keyscan {
         return \array_map(
             static function (string $key) {
                 [, $type, $publicKey] = \explode(" ", $key);
-                return new Key(type: $type, publicKey: $publicKey);
+                return Key::fromType(type: $type, publicKey: $publicKey);
             },
             $keys,
         );

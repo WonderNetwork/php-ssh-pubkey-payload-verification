@@ -13,7 +13,7 @@ use WonderNetwork\SshPubkeyPayloadVerification\Verify\Der\Sequence;
 use WonderNetwork\SshPubkeyPayloadVerification\Verify\KeyTypeNotAllowedException;
 use WonderNetwork\SshPubkeyPayloadVerification\Verify\VerifyHandler;
 
-final class EcdsaVerifyHandler implements VerifyHandler {
+final readonly class EcdsaVerifyHandler implements VerifyHandler {
     private EcdsaPemFormatter $formatter;
 
     public function __construct() {
@@ -31,8 +31,8 @@ final class EcdsaVerifyHandler implements VerifyHandler {
             $this->formatter->format($key),
         ) ?: throw new RuntimeException('Unable to get openssl public key');
 
-        if ($signature->type() !== $key->type()) {
-            throw new KeyTypeNotAllowedException($signature->type());
+        if ($signature->type !== $key->type->value) {
+            throw new KeyTypeNotAllowedException($signature->type);
         }
 
         /**
@@ -46,7 +46,7 @@ final class EcdsaVerifyHandler implements VerifyHandler {
          */
         $hashAlgorithm = OPENSSL_ALGO_SHA256;
 
-        $buffer = BinaryBuffer::of($signature->blob());
+        $buffer = BinaryBuffer::of($signature->blob);
         $r = $buffer->readString();
         $s = $buffer->readString();
         if (false === $buffer->eof()) {

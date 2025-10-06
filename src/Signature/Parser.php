@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace WonderNetwork\SshPubkeyPayloadVerification\Signature;
 
-final class Parser {
+final readonly class Parser {
     /**
      * @throws ParserException
      */
@@ -25,7 +25,7 @@ final class Parser {
             publicKey: PubkeyParser::parse($publicKey),
             namespace: $namespace,
             reserved: $reserved,
-            hashAlgorithm: new HashAlgorithm($hashAlgorithm),
+            hashAlgorithm: HashAlgorithm::from($hashAlgorithm),
             signature: SignatureParser::parse($signature),
         );
     }

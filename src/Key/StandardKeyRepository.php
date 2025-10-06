@@ -10,7 +10,7 @@ use WonderNetwork\SshPubkeyPayloadVerification\Https\HttpsSender;
 use WonderNetwork\SshPubkeyPayloadVerification\Keyscan\HostSender;
 use WonderNetwork\SshPubkeyPayloadVerification\Keyscan\Keyscan;
 
-final class StandardKeyRepository implements KeyRepository {
+final readonly class StandardKeyRepository implements KeyRepository {
     public function __construct(
         private GithubKeyRepository $github,
         private HttpsCertificateRepository $ssl,

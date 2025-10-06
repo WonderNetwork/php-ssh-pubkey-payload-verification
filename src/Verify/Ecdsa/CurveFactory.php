@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace WonderNetwork\SshPubkeyPayloadVerification\Verify\Ecdsa;
 
-final class CurveFactory {
+final readonly class CurveFactory {
     /**
      * @throws UnsupportedEllipticCurveException
      */

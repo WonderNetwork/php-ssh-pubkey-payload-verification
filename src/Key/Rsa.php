@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace WonderNetwork\SshPubkeyPayloadVerification\Key;
 
-final class Rsa {
+final readonly class Rsa {
     public static function fromModulusAndExponent(string $modulus, string $exponent): Key {
         return new Key(
-            type: Key::RSA,
+            type: KeyType::RSA,
             publicKey: \base64_encode(
                 \pack("N", \strlen('ssh-rsa')).'ssh-rsa'
                 .\pack("N", \strlen($exponent)).$exponent

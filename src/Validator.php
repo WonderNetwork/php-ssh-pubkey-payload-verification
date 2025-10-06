@@ -10,7 +10,7 @@ use WonderNetwork\SshPubkeyPayloadVerification\Signature\ParserException;
 use WonderNetwork\SshPubkeyPayloadVerification\Verify\VerifyException;
 use WonderNetwork\SshPubkeyPayloadVerification\Verify\VerifyHandlerLocator;
 
-final class Validator {
+final readonly class Validator {
     private Parser $parser;
     private VerifyHandlerLocator $verifyHandlerLocator;
 
@@ -31,13 +31,13 @@ final class Validator {
         $container = $this->parser->parse($signature);
         $allowedKeys = $this->publicKeyRepository->all($sender);
 
-        if ($namespace !== $container->namespace()) {
-            throw new NamespaceMismatchException($namespace, $container->namespace());
+        if ($namespace !== $container->namespace) {
+            throw new NamespaceMismatchException($namespace, $container->namespace);
         }
 
-        $publicKey = $container->publicKey();
+        $publicKey = $container->publicKey;
         $this->verifyHandlerLocator->for($publicKey)->verify(
-            signature: $container->signature(),
+            signature: $container->signature,
             payload: $container->createSigningPayload($message),
         ) ?: throw new VerificationFailedException();
 

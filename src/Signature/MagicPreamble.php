@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace WonderNetwork\SshPubkeyPayloadVerification\Signature;
 
 final class MagicPreamble {
-    public const VALUE = 'SSHSIG';
+    public const string VALUE = 'SSHSIG';
 
     /**
      * @throws InvalidPreambleException

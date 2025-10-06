@@ -11,19 +11,19 @@ use WonderNetwork\SshPubkeyPayloadVerification\Signature\UnexpectedTrailingSigna
 use WonderNetwork\SshPubkeyPayloadVerification\Verify\KeyTypeNotAllowedException;
 use WonderNetwork\SshPubkeyPayloadVerification\Verify\VerifyHandler;
 
-final class Ed25519VerifyHandler implements VerifyHandler {
+final readonly class Ed25519VerifyHandler implements VerifyHandler {
     /**
      * @throws KeyTypeNotAllowedException
      * @throws UnexpectedTrailingSignatureDataException
      * @throws SodiumException
      */
     public function verify(Signature $signature, Key $key, string $payload): bool {
-        $buffer = BinaryBuffer::ofBase64($key->publicKey());
+        $buffer = BinaryBuffer::ofBase64($key->publicKey);
         $type = $buffer->readString();
-        if ($key->type() !== $signature->type()) {
-            throw new KeyTypeNotAllowedException($signature->type());
+        if ($key->type->value !== $signature->type) {
+            throw new KeyTypeNotAllowedException($signature->type);
         }
-        if ($key->type() !== $type) {
+        if ($key->type->value !== $type) {
             throw new KeyTypeNotAllowedException($type);
         }
 
@@ -32,7 +32,7 @@ final class Ed25519VerifyHandler implements VerifyHandler {
             throw new UnexpectedTrailingPublicKeyDataException();
         }
 
-        if (\strlen($signature->blob()) !== SODIUM_CRYPTO_SIGN_BYTES) {
+        if (\strlen($signature->blob) !== SODIUM_CRYPTO_SIGN_BYTES) {
             throw new UnexpectedTrailingSignatureDataException();
         }
 
@@ -40,6 +40,6 @@ final class Ed25519VerifyHandler implements VerifyHandler {
             throw new UnexpectedTrailingSignatureDataException();
         }
 
-        return \sodium_crypto_sign_verify_detached($signature->blob(), $payload, $keyBlob);
+        return \sodium_crypto_sign_verify_detached($signature->blob, $payload, $keyBlob);
     }
 }

@@ -9,13 +9,14 @@ use Symfony\Component\Cache\Adapter\TraceableAdapter;
 use Symfony\Component\Cache\Adapter\TraceableAdapterEvent;
 use Symfony\Component\Cache\Psr16Cache;
 use WonderNetwork\SshPubkeyPayloadVerification\Key\Key;
+use WonderNetwork\SshPubkeyPayloadVerification\Key\KeyType;
 
 class CachedKeyscanTest extends TestCase {
     public function test_only_calls_once(): void {
         $expected = [
-            new Key(type: Key::ED25519, publicKey: 'charlie'),
-            new Key(type: Key::RSA, publicKey: 'alpha'),
-            new Key(type: Key::ECDSA_SHA2_NISTP256, publicKey:  'bravo'),
+            new Key(type: KeyType::ED25519, publicKey: 'charlie'),
+            new Key(type: KeyType::RSA, publicKey: 'alpha'),
+            new Key(type: KeyType::ECDSA_SHA2_NISTP256, publicKey:  'bravo'),
         ];
         $cacheSpy = new TraceableAdapter(new ArrayAdapter());
         $cache = new Psr16Cache($cacheSpy);

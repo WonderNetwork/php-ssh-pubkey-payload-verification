@@ -6,10 +6,12 @@ namespace WonderNetwork\SshPubkeyPayloadVerification\Github;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
+use Throwable;
 use WonderNetwork\SshPubkeyPayloadVerification\Key\InvalidKeyTypeException;
 use WonderNetwork\SshPubkeyPayloadVerification\Key\Key;
+use WonderNetwork\SshPubkeyPayloadVerification\Key\KeyType;
 
-final class GithubKeyRepository {
+final readonly class GithubKeyRepository {
     public function __construct(
         private ClientInterface $httpClient,
         private RequestFactoryInterface $requestFactory,
@@ -23,7 +25,7 @@ final class GithubKeyRepository {
      * @throws UnableToFetchKeysException
      */
     public function all(GithubUserSender $sender): array {
-        $url = \sprintf('https://github.com/%s.keys', $sender->username());
+        $url = \sprintf('https://github.com/%s.keys', $sender->username);
         $request = $this->requestFactory->createRequest('GET', $url);
         try {
             $content = $this->httpClient
@@ -37,7 +39,7 @@ final class GithubKeyRepository {
         return \array_map(
             static function (string $line) {
                 [$type, $publicKey] = \array_pad(\explode(" ", \trim($line)), 2, "");
-                return new Key(type: $type, publicKey: $publicKey);
+                return Key::fromType(type: $type, publicKey: $publicKey);
             },
             \explode("\n", \trim($content)),
         );

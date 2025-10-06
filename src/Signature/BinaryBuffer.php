@@ -13,7 +13,7 @@ final class BinaryBuffer {
         return new self($buffer);
     }
 
-    private function __construct(private string $buffer) {
+    private function __construct(private readonly string $buffer) {
     }
 
     public function peakString(): string {

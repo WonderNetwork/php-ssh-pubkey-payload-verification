@@ -11,8 +11,8 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 
 [, $sender, $namespace, $messageFile] = $argv;
 
-$message = file_get_contents($messageFile);
-$signature = file_get_contents($messageFile.'.sig');
+$message = (string) file_get_contents($messageFile);
+$signature = (string) file_get_contents($messageFile.'.sig');
 
 function get_keys_from_dns(string $domain, string $hostName): KeyCollection {
     $records = dns_get_record(sprintf('%s.%s', $hostName, $domain), DNS_TXT);
@@ -24,7 +24,7 @@ function get_keys_from_dns(string $domain, string $hostName): KeyCollection {
         /** @param array{txt:string} $record */
         static function (array $record) {
             [$type, $key] = explode(' ', $record['txt']);
-            return new Key(type: $type, publicKey: $key);
+            return Key::fromType(type: $type, publicKey: $key);
         },
         $records,
     );
@@ -32,7 +32,7 @@ function get_keys_from_dns(string $domain, string $hostName): KeyCollection {
     return KeyCollection::of(...$keys);
 }
 
-$dnsTxtRepository = new class (ValidatorBuilder::start()->standardKeyRepository()) implements KeyRepository {
+$dnsTxtRepository = new readonly class (ValidatorBuilder::start()->standardKeyRepository()) implements KeyRepository {
     public function __construct(private KeyRepository $standardKeyRepository) {
     }
 

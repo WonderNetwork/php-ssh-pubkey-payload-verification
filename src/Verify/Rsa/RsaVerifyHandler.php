@@ -9,7 +9,7 @@ use WonderNetwork\SshPubkeyPayloadVerification\Verify\KeyTypeNotAllowedException
 use WonderNetwork\SshPubkeyPayloadVerification\Verify\VerifyHandler;
 
 final class RsaVerifyHandler implements VerifyHandler {
-    private const RSA_MIN_MODULUS_SIZE = 1024;
+    private const int RSA_MIN_MODULUS_SIZE = 1024;
 
     private RsaPemFormatter $formatter;
 
@@ -36,14 +36,14 @@ final class RsaVerifyHandler implements VerifyHandler {
             throw new InvalidKeyLengthException($keyLength, self::RSA_MIN_MODULUS_SIZE);
         }
 
-        $hashAlgorithm = match($signature->type()) {
+        $hashAlgorithm = match($signature->type) {
             'rsa-sha2-256' => OPENSSL_ALGO_SHA256,
             'rsa-sha2-512' => OPENSSL_ALGO_SHA512,
-            default => throw new UnknownHashFunctionException($signature->type()),
+            default => throw new UnknownHashFunctionException($signature->type),
         };
 
         $expectedLength = $keyLength / 8;
-        $sigblob = $signature->blob();
+        $sigblob = $signature->blob;
         $len = \strlen($sigblob);
         if ($len > $expectedLength) {
             throw new SignatureLengthMismatchException($len, $expectedLength);

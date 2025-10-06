@@ -3,20 +3,13 @@ declare(strict_types=1);
 
 namespace WonderNetwork\SshPubkeyPayloadVerification\Keyscan;
 
-final class HostSender {
-    private const DEFAULT_PORT = 22;
+final readonly class HostSender {
+    private const int DEFAULT_PORT = 22;
+
     public function __construct(
-        private string $host,
-        private int $port = self::DEFAULT_PORT,
+        public string $host,
+        public int $port = self::DEFAULT_PORT,
     ) {
-    }
-
-    public function host(): string {
-        return $this->host;
-    }
-
-    public function port(): int {
-        return $this->port;
     }
 
     public function prefix(): string {

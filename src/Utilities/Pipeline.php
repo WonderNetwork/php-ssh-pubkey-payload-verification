@@ -5,7 +5,7 @@ namespace WonderNetwork\SshPubkeyPayloadVerification\Utilities;
 
 use Closure;
 
-final class Pipeline {
+final readonly class Pipeline {
     public static function of(Closure ...$closures): self {
         return new self($closures);
     }

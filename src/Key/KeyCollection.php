@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace WonderNetwork\SshPubkeyPayloadVerification\Key;
 
-final class KeyCollection {
+final readonly class KeyCollection {
     public static function empty(): self {
         return self::of();
     }

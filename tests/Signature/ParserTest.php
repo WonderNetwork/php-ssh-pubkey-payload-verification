@@ -22,10 +22,10 @@ final class ParserTest extends TestCase {
         $actual = $sut->parse($sample);
         self::assertEquals(
             new OpenSSHContainer(
-                publicKey: new Key(type: $expectedKeyType, publicKey: $expectedPublicKey),
+                publicKey: Key::fromType(type: $expectedKeyType, publicKey: $expectedPublicKey),
                 namespace: 'file',
                 reserved: '',
-                hashAlgorithm: new HashAlgorithm('sha512'),
+                hashAlgorithm: HashAlgorithm::SHA512,
                 signature: new Signature(
                     type: $expectedSignatureType,
                     blob: $expectedSignatureBlob,

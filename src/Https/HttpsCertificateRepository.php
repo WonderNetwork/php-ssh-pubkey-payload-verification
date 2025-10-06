@@ -11,7 +11,7 @@ use WonderNetwork\SshPubkeyPayloadVerification\RuntimeValidatorException;
 use WonderNetwork\SshPubkeyPayloadVerification\Utilities\ThrowOnWarnings;
 use WonderNetwork\SshPubkeyPayloadVerification\Verify\Ecdsa\UnsupportedEllipticCurveException;
 
-final class HttpsCertificateRepository {
+final readonly class HttpsCertificateRepository {
 
     /**
      * @throws CertificateException
@@ -19,12 +19,13 @@ final class HttpsCertificateRepository {
      */
     public function all(HttpsSender $sender): Key {
         try {
+            $sslConnect = sprintf('ssl://%s:%s', $sender->host, $sender->port);
             $socket = ThrowOnWarnings::run(
                 callable: static fn () => \stream_socket_client(
-                    address: $sender->sslConnect(),
+                    address: $sslConnect,
                     context: \stream_context_create(["ssl" => ["capture_peer_cert" => true]]),
                 ),
-                onError: "Failed stream_socket_client() to {$sender->sslConnect()}",
+                onError: "Failed stream_socket_client() to {$sslConnect}",
             );
         } catch (RuntimeValidatorException $e) {
             throw new CertificateException($e->getMessage());

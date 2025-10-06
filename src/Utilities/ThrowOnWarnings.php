@@ -5,7 +5,7 @@ namespace WonderNetwork\SshPubkeyPayloadVerification\Utilities;
 
 use WonderNetwork\SshPubkeyPayloadVerification\RuntimeValidatorException;
 
-final class ThrowOnWarnings {
+final readonly class ThrowOnWarnings {
     /**
      * @template T of mixed
      * @param callable(): (T|false) $callable

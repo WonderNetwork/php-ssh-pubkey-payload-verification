@@ -3,20 +3,8 @@ declare(strict_types=1);
 
 namespace WonderNetwork\SshPubkeyPayloadVerification\Verify\Der;
 
-final class Sequence extends TypeLengthValue {
+final readonly class Sequence extends DataStructure {
     public static function of(DataStructure ...$children): self {
-        return new self($children);
-    }
-
-    /** @param DataStructure[] $children */
-    private function __construct(private array $children) {
-    }
-
-    protected function value(): string {
-        return implode($this->children);
-    }
-
-    protected function type(): int {
-        return 0x30;
+        return new self(\implode("", $children), type: 0x30);
     }
 }

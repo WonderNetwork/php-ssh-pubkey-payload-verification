@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace WonderNetwork\SshPubkeyPayloadVerification;
 
-final class ValidatorFactory {
+final readonly class ValidatorFactory {
     public static function create(): Validator {
         return ValidatorBuilder::start()->build();
     }

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace WonderNetwork\SshPubkeyPayloadVerification\Verify\Der;
 
-final class ObjectIdentifier extends TypeLengthValue {
+final readonly class ObjectIdentifier extends DataStructure {
     /**
      * @link https://secg.org/sec1-v2.pdf#subsection.C.3
      * @link https://oid-base.com/get/1.2.840.10045.2.1
@@ -28,17 +28,6 @@ final class ObjectIdentifier extends TypeLengthValue {
     }
 
     private static function of(string $value): self {
-        return new self($value);
-    }
-
-    private function __construct(private string $value) {
-    }
-
-    protected function value(): string {
-        return $this->value;
-    }
-
-    protected function type(): int {
-        return 0x06;
+        return new self($value, type: 0x06);
     }
 }

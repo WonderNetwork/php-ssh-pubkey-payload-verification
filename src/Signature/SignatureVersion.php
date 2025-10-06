@@ -5,8 +5,8 @@ namespace WonderNetwork\SshPubkeyPayloadVerification\Signature;
 
 use RuntimeException;
 
-final class SignatureVersion {
-    private const VALUE = 1;
+final readonly class SignatureVersion {
+    private const int VALUE = 1;
 
     /**
      * @throws InvalidSignatureVersionException

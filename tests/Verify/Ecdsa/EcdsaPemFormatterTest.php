@@ -5,11 +5,12 @@ namespace WonderNetwork\SshPubkeyPayloadVerification\Verify\Ecdsa;
 
 use PHPUnit\Framework\TestCase;
 use WonderNetwork\SshPubkeyPayloadVerification\Key\Key;
+use WonderNetwork\SshPubkeyPayloadVerification\Key\KeyType;
 
 class EcdsaPemFormatterTest extends TestCase {
     public function testFormat(): void {
         $key = new Key(
-            type: 'ecdsa-sha2-nistp256',
+            type: KeyType::ECDSA_SHA2_NISTP256,
             publicKey:
             <<<EOF
                 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
