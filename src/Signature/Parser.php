@@ -8,12 +8,15 @@ final readonly class Parser {
      * @throws ParserException
      */
     public function parse(string $input): OpenSSHContainer {
-        $input = Wrapper::unwrap($input);
-        $input = Base64Decoder::decode($input);
-        $input = MagicPreamble::validateAndDiscard($input);
-        $input = SignatureVersion::validateAndDiscard($input);
-
-        $buffer = BinaryBuffer::of($input);
+        $buffer = BinaryBuffer::of(
+            ParserSteps::of(
+                $input,
+                Wrapper::unwrap(...),
+                Base64Decoder::decode(...),
+                MagicPreamble::validateAndDiscard(...),
+                SignatureVersion::validateAndDiscard(...),
+            ),
+        );
 
         $publicKey = $buffer->parse();
         $namespace = $buffer->readString();
