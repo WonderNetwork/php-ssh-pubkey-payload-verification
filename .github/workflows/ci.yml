@@ -33,4 +33,4 @@ jobs:
       - name: PHPStan
         run: vendor/bin/phpstan
       - name: PHPUnit
-        run: vendor/bin/phpunit
+        run: vendor/bin/phpunit --testdox

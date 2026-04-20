@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace WonderNetwork\SshPubkeyPayloadVerification\Verify\Der;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class IntegerTest extends TestCase {
-
-    /** @dataProvider integers */
+    #[DataProvider('integers')]
     public function testOfPositive(string $prefix, string $expected): void {
         $randomBytes = $prefix.\random_bytes(16);
         $sut = Integer::ofPositive($randomBytes);
