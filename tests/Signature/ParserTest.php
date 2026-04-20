@@ -3,11 +3,12 @@ declare(strict_types=1);
 
 namespace WonderNetwork\SshPubkeyPayloadVerification\Signature;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use WonderNetwork\SshPubkeyPayloadVerification\Key\Key;
 
 final class ParserTest extends TestCase {
-    /** @dataProvider signatures */
+    #[DataProvider('signatures')]
     public function test_parse_sample(
         string $sig,
         string $expectedKeyType,

@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace WonderNetwork\SshPubkeyPayloadVerification;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class ValidatorTest extends TestCase {
-    /** @dataProvider signatures */
+    #[DataProvider('signatures')]
     public function testValidate(string $signature): void {
         $sut = ValidatorBuilder::start()
             ->withKnownHostsFile(__DIR__.'/Resources/127.0.0.1.keyscan')
